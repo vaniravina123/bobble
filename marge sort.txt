@@ -1,0 +1,83 @@
+#include <stdio.h>
+#include <iostream>
+#include <ctime>
+#include <cstdlib>
+using namespace std;
+
+
+void merge(int data[], int awal, int akhir)
+{
+    int tengah,i,j,k,dt_tamp[akhir+1],l;
+    if (awal<akhir)
+    {
+        tengah=(awal+akhir)/2;
+        merge(data,awal,tengah);
+          merge(data,tengah+1,akhir);
+        i=awal;
+        j=tengah+1;
+        k=awal;
+        while(i<=tengah && j<=akhir)
+        {
+            if (data[i]<data[j])
+            {
+                dt_tamp[k]=data[i];
+                i++;
+            }
+            else
+            {
+                dt_tamp[k]=data[j];
+                j++;
+            }
+            k++;
+        }
+        
+        while(i<=tengah)
+        {
+            dt_tamp[k]=data[i];
+            i++;
+            k++;
+        }  
+        
+        while(j<=akhir)
+        {
+            dt_tamp[k]=data[j];
+            j++;
+            k++;
+        }
+        
+        for(l=awal;l<=akhir;l++)
+        {
+            data[l]=dt_tamp[l];
+        }
+
+    }
+}
+
+int main(int argc, char **argv)
+{
+	int data[8]={6,5,3,1,8,7,2,4};
+    int awal,banyak_dt,i,banyak_data;
+	cout<<"masukan jumlah data:";
+	cin>>banyak_data;
+	srand(time(NULL));
+	for(i=0;i<banyak_data;i++)
+	{
+		data[i]=rand()%100;
+	}
+	cout<<"\ndata:";
+	for(i=0;i<banyak_data;i++)
+	{
+		cout<<data[i]<<" ,";
+	}
+    awal=0;
+    banyak_dt=8;
+    
+    merge(data,awal,banyak_dt-1);
+    
+     for(i=0;i<banyak_dt;i++)
+    {
+        cout<<data[i]<<" ";
+    }
+    
+	return 0;
+}
